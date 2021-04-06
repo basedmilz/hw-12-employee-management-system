@@ -1,0 +1,25 @@
+{
+  "name": "hw-12-employee-management-system",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node iceCreamReadData"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/basedmilz/hw-12-employee-management-system.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/basedmilz/hw-12-employee-management-system/issues"
+  },
+  "homepage": "https://github.com/basedmilz/hw-12-employee-management-system#readme",
+  "dependencies": {
+    "inquirer": "^6.3.1",
+    "mysql": "^2.16.0"
+  }
+}
