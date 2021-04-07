@@ -24,16 +24,16 @@ INSERT INTO role (title, salary, department_id)
 VALUES ("Pharmacy Aide", 35000, 5);
 
 
+ INSERT INTO employee (first_name, last_name, role_id, manager_id)
+VALUES ("John", "Michaels", 1, NULL); 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ("John", "Michaels", 1, 1);
+VALUES ("Susan", "Lyles", 2, 1);
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ("Susan", "Lyles", 2, 2);
+VALUES ("Billy", "Smolden", 3, 2);
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ("Billy", "Smolden", 3, 3);
+VALUES ("Ebony", "Turner", 4, 6);
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ("Ebony", "Turner", 4, NULL);
-INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ("Vaticia", "Bullcok", 5, 5);
+VALUES ("Vaticia", "Bullcok", 5, 4); 
 
 
 
