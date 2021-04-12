@@ -151,13 +151,13 @@ const addDep = () => {
           name: "departmentName",
           message: "Title of new department?"
         }
-        
+
       ])
       .then((data) => {
         connection.query('INSERT INTO DEPARTMENT SET ? ',
           {
             name: data.departmentName
-            
+
           },
           (err) => {
             if (err) throw err
@@ -193,7 +193,7 @@ const addEmployees = () => {
           name: "managerid",
           message: "New Employee Manager Id?"
         }
-        
+
       ])
       .then((data) => {
         connection.query('INSERT INTO EMPLOYEE SET ? ',
@@ -203,7 +203,7 @@ const addEmployees = () => {
             role_id: data.roleid,
             manager_id: data.managerid
 
-            
+
           },
           (err) => {
             if (err) throw err
@@ -216,25 +216,42 @@ const addEmployees = () => {
 }
 
 const updateRole = () => {
-  connection.query('SELECT * FROM role', (err, res) => {
-if (err) throw err;
-inquirer 
-.prompt([
-  {
-    type: "list",
-    name: 'updatedEmployee',
-    message: "Choose which employee to update.",
-    choices: [
-      'John Michaels',
-      'Susan Lyles',
-      'Billy Smolden',
-      'Ebony Turner',
-      'Vaticia Bullock',
-      'John Nuewas'
+  connection.query('SELECT * FROM employee', (err, res) => {
+    if (err) throw err;
+    console.log("this is my update role", res)
+    let choicesEmp = res.map((employee) => {
+      return { value: employee.id, name: employee.first_name + " " + employee.last_name }
+    })
+    // console.log(choicesEmp)
+    inquirer
+      .prompt([
+        {
+          type: "list",
+          name: 'updatedEmployee',
+          message: "Choose which employee to update.",
+          choices: choicesEmp
+        } 
+      ]).then((choicesEmp) => {
+      // console.log(choicesEmp.updatedEmployee)
+      connection.query('SELECT * FROM role',(err, res)  => {
+        if (err) throw err;
+        console.log(res)
+      })
+      let choicesRole = res.map((employee) => {
+        return { value: employee.id , name: employee.title}
+      })
+      console.log(choicesRole)
+      inquirer
+      .prompt([
+        {
+          type: "list",
+          name: 'updatedRole',
+          message: "Choose which employee to update.",
+          choices: choicesRole
+        }]).then((updateRole) => {
+console.log("this is" , updateRole)
+        })
       
-      
-    ]
-
-}])
-  } )
+    })
+  })
 }
