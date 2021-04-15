@@ -84,6 +84,7 @@ const allEmployees = () => {
     console.table(res);
 
   });
+  startPrompt()
 };
 const employeesRoles = () => {
   console.log('Selecting all roles...\n');
@@ -93,6 +94,7 @@ const employeesRoles = () => {
     console.table(res);
 
   });
+  startPrompt()
 };
 const allDepartments = () => {
   console.log('Selecting all departments...\n');
@@ -102,6 +104,7 @@ const allDepartments = () => {
     console.table(res);
 
   });
+  startPrompt()
 };
 
 const addRole = () => {
@@ -137,9 +140,11 @@ const addRole = () => {
             console.table('Successfully added your role!')
           }
         )
-      })
-  }
-  )
+        startPrompt()
+      }) 
+    }
+    )
+    
 }
 const addDep = () => {
   connection.query('SELECT * FROM department', (err, res) => {
@@ -164,9 +169,11 @@ const addDep = () => {
             console.table('Successfully added your department!')
           }
         )
+        startPrompt()
       })
   }
   )
+
 }
 const addEmployees = () => {
   connection.query('SELECT * FROM employee', (err, res) => {
@@ -210,9 +217,11 @@ const addEmployees = () => {
             console.table('Successfully added your new employee!')
           }
         )
+        startPrompt()
       })
   }
   )
+
 }
 
 const updateRole = () => {
@@ -230,28 +239,87 @@ const updateRole = () => {
           name: 'updatedEmployee',
           message: "Choose which employee to update.",
           choices: choicesEmp
-        } 
+        }
       ]).then((choicesEmp) => {
-      // console.log(choicesEmp.updatedEmployee)
-      connection.query('SELECT * FROM role',(err, res)  => {
-        if (err) throw err;
-        console.log(res)
-      })
-      let choicesRole = res.map((employee) => {
-        return { value: employee.id , name: employee.title}
-      })
-      console.log(choicesRole)
-      inquirer
-      .prompt([
-        {
-          type: "list",
-          name: 'updatedRole',
-          message: "Choose which employee to update.",
-          choices: choicesRole
-        }]).then((updateRole) => {
-console.log("this is" , updateRole)
+        console.log(choicesEmp.updatedEmployee)
+        connection.query('SELECT * FROM role', (err, res) => {
+          if (err) throw err;
+          // console.log(res)
         })
-      
-    })
+        let choicesRole = res.map((data) => {
+          return { value: data.id, name: data.title }
+        })
+        // console.log(choicesRole)
+        // inquirer
+        // .prompt([
+        //   {
+        //     type: "list",
+        //     name: 'updatedRole',
+        //     message: "Choose which employee to update.",
+        //     choices: choicesRole
+        //   }]).then((updateRole) => {
+        //     connection.query(
+        //       `UPDATE employee SET role_id = ? WHERE role_id = ?`,
+        //       [updateRole.values(answer), updateRole.values(employee)],
+        //       (err, res) => {
+        //         if (err) throw err;
+        //         // console.log("this is" , updateRole)
+        //         startPrompt();
+        //   })
+
+        startPrompt()
+      })
   })
+}
+
+const startPrompt = () => {
+  inquirer
+    .prompt(
+      {
+        name: 'choice',
+        type: 'list',
+        message: 'Choose one of these options',
+        choices: [
+          'View all employees',
+          'View all departments',
+          'View all employees roles ',
+          'Update role',
+          'Add employee',
+          'Add department',
+          'Add role',
+          'Exit',
+        ]
+      }
+
+    ).then((data) => {
+      switch (data.choice) {
+        case 'View all employees':
+          allEmployees();
+          break;
+        case 'View all departments':
+          allDepartments();
+          break;
+        case 'View all employees roles ':
+          employeesRoles();
+          break;
+        case 'Update role':
+          updateRole();
+          break;
+        case 'Add employee':
+          addEmployees();
+          break;
+        case 'Add department':
+          addDep();
+          break;
+        case 'Add role':
+          addRole();
+          break;
+        case 'Exit':
+          exit();
+          break;
+
+
+      }
+    })
+
 }
